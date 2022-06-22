@@ -1,22 +1,59 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView, DeleteView
-
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Post
 
 
-def about_page(request):
-    return render(request,'blog/about.html')
+# from .forms import PostForm
 
-class HomePage(ListView):
+
+def about_page(request):
+    return render(request, 'blog/about.html')
+
+
+class PostListView(ListView):
     model = Post
     template_name = 'blog/home_page.html'
     context_object_name = 'posts'
+    ordering = ['-date_posted']
 
 
-# def home_page(request):
-#     posts = Post.objects.all()
-#     context = {'posts':posts}
-#     if request.user.is_authenticated:
-#         context['username']=request.user.username
-#     return render(request,'blog/home_page.html',context)
+class PostDetailView(DetailView):
+    model = Post
+    context_object_name = 'post'
+    template_name = 'blog/post_detail.html'
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    template_name = 'blog/post_form.html'
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def test_func(self):
+        post = self.get_object()  # this will return current post that we want to update
+        if self.request.user == post.author:
+            return True
+        return False
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    context_object_name = 'post'
+    success_url = reverse_lazy('blog:blog-home')
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
