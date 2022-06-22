@@ -2,6 +2,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView, LoginView
 
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 from users import views as user_views
 
 urlpatterns = [
@@ -14,3 +19,6 @@ urlpatterns = [
     path('profile/<str:username>/', user_views.profile, name='profile'),
 
 ]
+
+if settings.DEBUG: # It means if we are currently in DEBUG mode.
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
