@@ -22,6 +22,13 @@ class PostListView(ListView):
     paginate_by = 5
 
 
+class FiveLatestPostListView(ListView):
+    model = Post
+    template_name = 'blog/latest_posts.html'
+    context_object_name = 'posts'
+    queryset = Post.objects.all().order_by('-date_posted')[0:5]
+
+
 class UserPostListView(ListView):
     model = Post
     template_name = 'blog/user_posts.html'

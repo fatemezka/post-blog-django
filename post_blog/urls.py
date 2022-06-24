@@ -50,6 +50,6 @@ urlpatterns = [
          name='password_reset_complete'),
 
 ]
-
-if settings.DEBUG:  # It means if we are currently in DEBUG mode.
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#
+# if settings.DEBUG:  # It means if we are currently in DEBUG mode.
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

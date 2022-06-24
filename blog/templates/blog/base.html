@@ -32,7 +32,7 @@
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{% url 'blog:blog-home' %}">Home</a>
                     <a class="nav-item nav-link" href="{% url 'blog:blog-about' %}">About</a>
-                    <a class="nav-item nav-link" href="http://127.0.0.1:8000/admin/">ADMIN</a>
+                    {#                    <a class="nav-item nav-link" href="http://127.0.0.1:8000/admin/">ADMIN</a>#}
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
@@ -69,14 +69,14 @@
         <div class="col-md-4">
             <div class="content-section">
                 <h3>Our Sidebar</h3>
-{#                <p class='text-muted'>You can put any information here you'd like.#}
+                {#                <p class='text-muted'>You can put any information here you'd like.#}
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-light">
-                        <a href=".">Latest Posts</a>
+                        <a href="{% url 'blog:five-latest-posts' %}">Five Latest Posts</a>
                     </li>
-{#                    <li class="list-group-item list-group-item-light">Announcements</li>#}
-{#                    <li class="list-group-item list-group-item-light">Calendars</li>#}
-{#                    <li class="list-group-item list-group-item-light">etc</li>#}
+                    {#                    <li class="list-group-item list-group-item-light">Announcements</li>#}
+                    {#                    <li class="list-group-item list-group-item-light">Calendars</li>#}
+                    {#                    <li class="list-group-item list-group-item-light">etc</li>#}
                 </ul>
                 </p>
             </div>
